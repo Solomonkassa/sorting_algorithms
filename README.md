@@ -14,6 +14,9 @@ The implemented sorting algorithms are:
 - Cocktail Sort
 - Counting Sort
 - Merge Sort
+- radix_sort
+- bitonic sort
+- quick sort hoare
 
 ## Files
 
