@@ -5,21 +5,21 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t interval = 1, i, j;
-	int tmp;
+	/* Version with "take" variable */
+	int take = 1, i, j, tmp;
 
-	while (interval < size)
-		interval = interval * 3 + 1;
+	while (take < ((int)(size)))
+		take = (3 * take) + 1;
 
-	for (interval = (interval - 1) / 3; interval > 0; interval = (interval - 1) / 3)
+	for (take = (take - 1) / 3; take > 0; take = (take - 1) / 3)
 	{
-		for (i = interval; i < size; i += 1)
+		for (i = take; i < (int)size; i += 1)
 		{
 			tmp = array[i];
 
-			for (j = i; j >= interval && array[j - interval] > tmp; j -= interval)
+			for (j = i; j >= take && array[j - take] > tmp; j -= take)
 			{
-				array[j] = array[j - interval];
+				array[j] = array[j - take];
 			}
 			array[j] = tmp;
 		}
