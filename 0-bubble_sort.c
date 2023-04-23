@@ -1,21 +1,6 @@
 #include "sort.h"
 
 /**
- * swap - Swaps the values of two integers
- *
- * @a: Pointer to the first integer
- * @b: Pointer to the second integer
- */
-void swap(int *a, int *b)
-{
-	int temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}
-
-/**
  * bubble_sort - sort list with bubble
  * @array: The array to be printed
  * @size: Number of elements in @array
@@ -33,7 +18,9 @@ void bubble_sort(int *array, size_t size)
 		{
 			if (array[i] > array[i + 1])
 			{
-				swap(array[i], array[i + 1]);
+				tmp = array[i];
+                                array[i] = array[i + 1];
+                                array[i + 1] = tmp;
 				print_array(array, size);
 			}
 		}
