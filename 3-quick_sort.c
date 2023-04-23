@@ -1,38 +1,36 @@
-
 #include "sort.h"
 
 /**
- * _partition - array partition
+ * partition - array partition
  * @array: array to sort
  * @first: first position
  * @last: last position
  * @size: array size
  * Return: int pivot index
  */
-int _partition(int *array, int low, int high, size_t size)
+int partition(int *array, int first, int last, size_t size)
 {
-	int i = low - 1;
-	size_t tmp, j;
+	int i = first - 1, aux, j;
 
-	for (j = low; j <= high - 1; j++)
+	for (j = first; j <= last - 1; j++)
 	{
-		if (array[j] < array[high])
+		if (array[j] < array[last])
 		{
 			i++;
 			if (i < j)
 			{
-				tmp = array[i];
+				aux = array[i];
 				array[i] = array[j];
-				array[j] = tmp;
+				array[j] = aux;
 				print_array(array, size);
 			}
 		}
 	}
-	if (array[i + 1] > array[high])
+	if (array[i + 1] > array[last])
 	{
-		tmp = array[i + 1];
-		array[i + 1] = array[high];
-		array[high] = tmp;
+		aux = array[i + 1];
+		array[i + 1] = array[last];
+		array[last] = aux;
 		print_array(array, size);
 	}
 
@@ -40,21 +38,21 @@ int _partition(int *array, int low, int high, size_t size)
 }
 
 /**
- * _pivot - sorts an array of integers recursively
+ * qs - sorts an array of integers recursively
  * @array: array to sort
  * @first: first position
  * @last: last position
  * @size: array size
  */
-void _pivot(int *array, int low, int high, size_t size)
+void qs(int *array, int first, int last, size_t size)
 {
 	int pivot;
 
-	if (low < high)
+	if (first < last)
 	{
-		pivot = _partition(array, low, high, size);
-		_pivot(array, low, pivot - 1, size);
-		_pivot(array, pivot + 1, high, size);
+		pivot = partition(array, first, last, size);
+		qs(array, first, pivot - 1, size);
+		qs(array, pivot + 1, last, size);
 	}
 }
 
@@ -66,5 +64,5 @@ void _pivot(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	_pivot(array, 0, size - 1, size);
+	qs(array, 0, size - 1, size);
 }
