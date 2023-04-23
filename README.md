@@ -52,6 +52,14 @@ The programs were written in C language and compiled using the `gcc` compiler wi
 The header file `sort.h` contains the following function prototypes:
 
 ```c
+#include <stdlib.h>
+/**
+ * struct listint_s - Doubly linked list node
+ *
+ * @n: Integer stored in the node
+ * @prev: Pointer to the previous element of the list
+ * @next: Pointer to the next element of the list
+ */
 typedef struct listint_s
 {
 	const int n;
