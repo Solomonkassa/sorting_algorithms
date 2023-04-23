@@ -2,6 +2,25 @@
 #include "sort.h"
 
 /**
+ * qs - sorts an array of integers recursively
+ * @array: array to sort
+ * @low: first index
+ * @high: last index
+ * @size: array size
+ */
+void qs(int *array, int low, int high, size_t size)
+{
+	int pivot;
+
+	if (low < high)
+	{
+		pivot = _partition(array, low, high, size);
+		qs(array, low, pivot - 1, size);
+		qs(array, pivot + 1, high, size);
+	}
+}
+
+/**
  * _partition - array partition
  * @array: array to sort
  * @low: first index
@@ -36,25 +55,6 @@ int _partition(int *array, int low, int high, size_t size)
 	}
 
 	return (i + 1);
-}
-
-/**
- * qs - sorts an array of integers recursively
- * @array: array to sort
- * @low: first index
- * @high: last index
- * @size: array size
- */
-void qs(int *array, int low, int high, size_t size)
-{
-	int pivot;
-
-	if (low < high)
-	{
-		pivot = _partition(array, low, high, size);
-		qs(array, low, pivot - 1, size);
-		qs(array, pivot + 1, high, size);
-	}
 }
 
 /**
