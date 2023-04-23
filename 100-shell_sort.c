@@ -7,19 +7,20 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	int gap = 1, i, j, tmp;
+	int take = 1, i, j, tmp;
 
-	while (gap < ((int)(size)))
-		gap = (3 * gap) + 1;
-	for (gap = (gap - 1) / 3; gap > 0; gap = (gap - 1) / 3)
+	while (take < ((int)(size)))
+		take = (3 * take) + 1;
+	for (take = (take - 1) / 3; take > 0; take = (take - 1) / 3)
 	{
-		for (i = gap; i < (int)size; i += 1)
+		for (i = take; i < (int)size; i += 1)
 		{
 			tmp = array[i];
 
-			for (j = i; j >= gap && array[j - gap] > tmp; j -= gap)
-				array[j] = array[j - gap];
-
+			for (j = i; j >= take && array[j - take] > tmp; j -= take)
+			{
+				array[j] = array[j - take];
+			}
 			array[j] = tmp;
 		}
 		print_array(array, size);
