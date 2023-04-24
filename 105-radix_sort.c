@@ -1,6 +1,7 @@
 #include "sort.h"
 
 void radix_counting_sort(int *array, size_t size, int sig, int *buff);
+void radix_sort(int *array, size_t size);
 
 /**
  * radix_sort - A function that sorts an array of integers in ascending
