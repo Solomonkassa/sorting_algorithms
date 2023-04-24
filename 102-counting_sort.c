@@ -1,81 +1,68 @@
 #include "sort.h"
 
-void algorithm_counting_sort(int *array, int size, int max);
-
 /**
- * counting_sort - A function that sorts an array of integers
- * in ascending order using Counting sort algorithm
+ * get_max - Get the maximum value in an array of integers.
  * @array: An array of integers.
- * @size: The size of the array
+ * @size: The size of the array.
  *
- * Return: Nothing
+ * Return: The maximum integer in the array.
  */
-void counting_sort(int *array, size_t size)
+int get_max(int *array, int size)
 {
-	int max, size_int;
-	size_t i;
+	int max, i;
 
-	size_int = (int) size;
-	max = array[0];
-	for (i = 0; i < size; i++)
+	for (max = array[0], i = 1; i < size; i++)
 	{
 		if (array[i] > max)
-		{
 			max = array[i];
-		}
 	}
-	algorithm_counting_sort(array, size_int, max);
+
+	return (max);
 }
 
 /**
- * algorithm_counting_sort - Afunction that counts sort and arrange in
- * ascending order
- * @array: An array of integers
- * @size: The size of the array
- * @max: Maximum number from the given array
+ * counting_sort - Sort an array of integers in ascending order
+ *                 using the counting sort algorithm.
+ * @array: An array of integers.
+ * @size: The size of the array.
  *
- * Return: Nothing
+ * Description: Prints the counting array after setting it up.
  */
-void algorithm_counting_sort(int *array, int size, int max)
+void counting_sort(int *array, size_t size)
 {
-	int *sum_count, *sorted_array;
-	int number_of_elements = max + 1;
-	int i;
+	int *count, *sorted, max, i;
 
-	sum_count = malloc(sizeof(int) * number_of_elements);
-	if (sum_count == NULL)
+	if (array == NULL || size < 2)
+		return;
+
+	sorted = malloc(sizeof(int) * size);
+	if (sorted == NULL)
+		return;
+	max = get_max(array, size);
+	count = malloc(sizeof(int) * (max + 1));
+	if (count == NULL)
 	{
+		free(sorted);
 		return;
 	}
-	for (i = 0; i < number_of_elements; i++)
+
+	for (i = 0; i < (max + 1); i++)
+		count[i] = 0;
+	for (i = 0; i < (int)size; i++)
+		count[array[i]] += 1;
+	for (i = 0; i < (max + 1); i++)
+		count[i] += count[i - 1];
+	print_array(count, max + 1);
+
+	for (i = 0; i < (int)size; i++)
 	{
-		sum_count[i] = 0;
-	}
-	for (i = 0; i < size; i++)
-	{
-		sum_count[array[i]] += 1;
-	}
-	for (i = 0; i < number_of_elements; i++)
-	{
-		sum_count[i] += sum_count[i - 1];
+		sorted[count[array[i]] - 1] = array[i];
+		count[array[i]] -= 1;
 	}
 
-	print_array(sum_count, number_of_elements);
-	sorted_array = malloc(sizeof(int) * size);
-	if (sorted_array == NULL)
-	{
-		free(sum_count);
-		return;
-	}
-	for (i = 0; i < size; i++)
-	{
-		sorted_array[sum_count[array[i]] - 1] = array[i];
-		sorted_array[i] -= 1;
-	}
-	for (i = 0; i < size; i++)
-	{
-		array[i] = sorted_array[i];
-	}
-	free(sum_count);
-	free(sorted_array);
+	for (i = 0; i < (int)size; i++)
+		array[i] = sorted[i];
+
+	free(sorted);
+	free(count);
 }
