@@ -1,28 +1,33 @@
+#include "sort.h"
+
 /**
- * shell_sort - Shell sort - Knuth Sequence
- * @array: array to sort
- * @size: size of array
+ * shell_sort - Shell sort algorithm
+ * @array: unsorted data
+ * @size: large of array
+ * Return: Nothing
  */
 void shell_sort(int *array, size_t size)
 {
-	/* Version with "take" variable */
-	int take = 1, i, j, tmp;
+	int tmp;
+	size_t j, gap, n;
 
-	while (take < ((int)(size)))
-		take = (3 * take) + 1;
-
-	for (take = (take - 1) / 3; take > 0; take = (take - 1) / 3)
+	gap = 1;
+	if (!array || size < 2)
+		return;
+	/* Create Knuth sequence */
+	while (gap < size / 3)
+		gap = gap * 3 + 1;
+	while (gap > 0)
 	{
-		for (i = take; i < (int)size; i += 1)
+		for (j = gap; j < size; j += 1)
 		{
-			tmp = array[i];
-
-			for (j = i; j >= take && array[j - take] > tmp; j -= take)
-			{
-				array[j] = array[j - take];
-			}
-			array[j] = tmp;
+			tmp = array[j];
+			for (n = j; n >= gap && tmp < array[n - gap]; n -= gap)
+				array[n] = array[n - gap];
+			array[n] = tmp;
 		}
+		/* decreasing the interval */
+		gap /= 3;
 		print_array(array, size);
 	}
 }
