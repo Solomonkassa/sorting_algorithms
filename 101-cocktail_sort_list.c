@@ -1,7 +1,7 @@
 #include "sort.h"
 
-void swap_node_ahead(listint_t **list, listint_t **tail, listint_t **shaker);
-void swap_node_behind(listint_t **list, listint_t **tail, listint_t **shaker);
+void swap_node_ahead(listint_t **head, listint_t **tail, listint_t **shaker);
+void swap_node_behind(listint_t **head, listint_t **tail, listint_t **shaker);
 
 /**
  * cocktail_sort_list - A function that sorts a doubly linked list
@@ -53,14 +53,14 @@ void cocktail_sort_list(listint_t **list)
  *
  * Return: Nothing
  */
-void swap_node_ahead(listint_t **list, listint_t **tail, listint_t **shaker)
+void swap_node_ahead(listint_t **head, listint_t **tail, listint_t **shaker)
 {
 	listint_t *tmp = (*shaker)->next;
 
 	if ((*shaker)->prev != NULL)
 		(*shaker)->prev->next = tmp;
 	else
-		*list = tmp;
+		*head = tmp;
 	tmp->prev = (*shaker)->prev;
 	(*shaker)->next = tmp->next;
 	if (tmp->next != NULL)
@@ -80,7 +80,7 @@ void swap_node_ahead(listint_t **list, listint_t **tail, listint_t **shaker)
  *
  * Return: Nothing
  */
-void swap_node_behind(listint_t **list, listint_t **tail, listint_t **shaker)
+void swap_node_behind(listint_t **head, listint_t **tail, listint_t **shaker)
 {
 	listint_t *tmp = (*shaker)->prev;
 
@@ -93,7 +93,7 @@ void swap_node_behind(listint_t **list, listint_t **tail, listint_t **shaker)
 	if (tmp->prev != NULL)
 		tmp->prev->next = *shaker;
 	else
-		*list = *shaker;
+		*head = *shaker;
 	(*shaker)->next = tmp;
 	tmp->prev = *shaker;
 	*shaker = tmp;
