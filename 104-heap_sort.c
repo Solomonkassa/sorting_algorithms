@@ -8,19 +8,21 @@
  */
 void heap_sort(int *array, size_t size)
 {
-	int high;
-
-	heapify(array, size);
-	high = size - 1;
-
-	while (high > 0)
-	{
-		swap(array, array[high], array[0]);
-		print_array(array, size);
-		high = size - 1;
-		printf("BEFORE INITIAL SIFT_DOWN\n");
-		sift_down(array, 0, high, size);
-	}
+    int i, tmp;
+    
+    for (i = size / 2 - 1; i >= 0; i--)
+    {
+        heapify(array, size, i);
+    }
+    
+    for (i = size - 1; i >= 0; i--)
+    {
+        tmp = array[0];
+        array[0] = array[i];
+        array[i] = tmp;
+        print_array(array, size);
+        heapify(array, i, 0);
+    }
 }
 
 /**
@@ -30,46 +32,28 @@ void heap_sort(int *array, size_t size)
  */
 void heapify(int *array, size_t size)
 {
-	int low;
-
-	low = (size - 2) / 2;
-
-	while (low >= 0)
-	{
-		printf("BEFORE HEAPIFY SIFT_DOWN\n");
-		sift_down(array, low, size - 1, size);
-		low = low - 1;
-	}
-}
-
-/**
- * sift_down - sorts heap so parent values are larger than child values
- * @array: list of integers
- * @low: start of array
- * @high: end of array
- */
-void sift_down(int *array, int low, int high, size_t size)
-{
-	int root;
-	int child;
-
-	root = low;
-
-	while (root * 2 + 1 <= high)
-	{
-		child = root * 2 + 1;
-		if (child + 1 <= high && array[child] < array[child + 1])
-			child = child + 1;
-		if (array[root] < array[child])
-		{
-			printf("BEFORE SIFT_DOWN SWAP\n");
-			swap(array, array[root], array[child]);
-			print_array(array, size);
-			root = child;
-		}
-		else
-			return;
-	}
+    int tmp, large = i;
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+    
+    if (l < size && array[l] > array[large])
+    {
+        large = l;
+    }
+    
+     if (r < size && array[r] > array[large])
+    {
+        large = r;
+    }
+    
+    if (large != i)
+    {
+        tmp = array[i];
+        array[i] = array[large];
+        array[large] = tmp;
+        print_array(array, size);
+        heapify(array, size, large);    
+    }
 }
 
 /**
