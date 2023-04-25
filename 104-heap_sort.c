@@ -1,76 +1,57 @@
+#include <stdint.h>
 #include "sort.h"
-
+#define getParent(i) (((i) - 1) / 2)
+#define getLeft(i) (2 * (i) + 1)
+#define getRight(i) (2 * (i) + 2)
 /**
- * heap_sort - sorts an array of integers in ascending order
- * using the Heap Sort algorithm
- * @array: the array to sort
- * @size: the size of the array
+ * sift_down - sift_down
+ * @array: array containing heap
+ * @size: total size of array
+ * @index: index of index node of heap
+ * @nth: index of nth node in heap to examine
  */
-
+void sift_down(int *array, size_t size, size_t index, size_t nth)
+{
+size_t largest, left, right;
+do {
+left = getLeft(index);
+right = getRight(index);
+largest = index;
+if (right <= nth && array[right] > array[index])
+largest = right;
+if (array[left] > array[largest])
+largest = left;
+if (index == largest)
+return;
+array[index] ^= array[largest];
+array[largest] ^= array[index];
+array[index] ^= array[largest];
+print_array(array, size);
+index = largest;
+} while (getLeft(index) <= nth);
+}
+/**
+ * heap_sort - use heap sort
+ * @array: array to sort
+ * @size: size of array
+ */
 void heap_sort(int *array, size_t size)
 {
-    int temp;
-    ssize_t i;
-
-    if (!array || size < 2)
-        return;
-
-    /* Build a max heap */
-    for (i = (size / 2) - 1; i >= 0; i--)
-        sift_down(array, size, i, size);
-
-    /* Extract the elements in descending order */
-    for (i = size - 1; i > 0; i--)
-    {
-        /* Swap the root with the last element */
-        swap(array, 0, i);
-        print_array(array, size);
-
-        /* Sift down the new root to maintain the max heap property */
-        sift_down(array, i, 0, size);
-    }
-}
-
-/**
- * sift_down - sifts down a node in a max heap to maintain the max heap property
- * @array: the array that represents the max heap
- * @size: the size of the heap
- * @root: the index of the root of the subtree to sift down
- * @total_size: the total size of the original array
- */
-
-void sift_down(int *array, size_t size, ssize_t root, size_t total_size)
+size_t node, sorted;
+if (array == NULL || size < 2)
+return;
+for (node = getParent(size - 1); node != SIZE_MAX; node--)
+sift_down(array, size, node, size - 1);
+for (sorted = size - 1; sorted > 1; sorted--)
 {
-    ssize_t max, left, right;
-
-    while ((left = (2 * root) + 1) < size)
-    {
-        right = left + 1;
-        max = (right < size && array[right] > array[left]) ? right : left;
-        max = (array[max] > array[root]) ? max : root;
-
-        if (max == root)
-            return;
-
-        swap(array, root, max);
-        print_array(array, total_size);
-
-        root = max;
-    }
+array[0] ^= array[sorted];
+array[sorted] ^= array[0];
+array[0] ^= array[sorted];
+print_array(array, size);
+sift_down(array, size, 0, sorted - 1);
 }
-
-/**
- * swap - swaps two values in an array
- * @array: the array containing the values to swap
- * @i: the index of the first value to swap
- * @j: the index of the second value to swap
- */
-
-void swap(int *array, int i, int j)
-{
-    int temp;
-
-    temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+array[0] ^= array[1];
+array[1] ^= array[0];
+array[0] ^= array[1];
+print_array(array, size);
 }
