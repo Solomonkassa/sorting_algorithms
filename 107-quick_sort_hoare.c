@@ -1,69 +1,88 @@
 #include "sort.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 /**
- * quick_sort - sorts an array of integers in ascending order.
- * @array: the array to be sorted.
- * @size: the size of the array.
+ * _swap - swaps two values in an array
+ *
+ * @array: data to sort
+ * @i: first value
+ * @j: second value
+ *
+ * Return: No Return
+ */
+void _swap(int *array, int i, int j)
+{
+	int tmp;
+
+	tmp = array[i];
+	array[i] = array[j];
+	array[j] = tmp;
+}
+
+/**
+ * partition - sorts a partition of data in relation to a pivot
+ *
+ * @array: data to sort
+ * @min: Left wall
+ * @max: right wall
+ * @size: size of data
+ *
+ * Return: New Pivot
+ */
+int partition(int *array, int min, int max, size_t size)
+{
+	int i, j, pivot = array[max];
+
+	for (i = min, j = max; 1; i++, j--)
+	{
+		while (array[i] < pivot)
+			i++;
+
+		while (array[j] > pivot)
+			j--;
+
+		if (i >= j)
+			return (i);
+		_swap(array, i, j);
+		print_array(array, size);
+	}
+}
+
+/**
+ * quicksort -  sorts an array of integers in ascending order using the
+ * Quick sort algorithm Lomuto partition scheme
+ *
+ * @array: data to sort
+ * @min: Left wall
+ * @max: right wall
+ * @size: size of data
+ *
+ * Return: No Return
+ */
+void quicksort(int *array, int min, int max, size_t size)
+{
+	int p;
+
+	if (min < max)
+	{
+		p = partition(array, min, max, size);
+		quicksort(array, min, p - 1, size);
+		quicksort(array, p, max, size);
+	}
+}
+
+/**
+ * quick_sort_hoare -  sorts an array of integers in ascending order using the
+ * Quick sort algorithm Hoare partition scheme
+ *
+ * @array: data to sort
+ * @size: size of data
+ *
+ * Return: No Return
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	quick_sort_extra_hoare(array, 0, (int)size - 1, size);
-}
+	if (!array || size < 2)
+		return;
 
-/**
- * quick_sort_extra - sorts an array of integers in asceding order.
- * @array: the array to be sorted.
- * @lo: the beginning of the array
- * @hi: the end of the array
- * @size: the size of the original array
- */
-void quick_sort_extra_hoare(int *array, int lo, int hi, size_t size)
-{
-	int pivot;
-
-	if (lo < hi)
-	{
-		pivot = partition_hoare(array, lo, hi, size);
-		quick_sort_extra_hoare(array, lo, pivot, size);
-		quick_sort_extra_hoare(array, pivot + 1, hi, size);
-	}
-}
-
-/**
- * partition - partitions an array of integers in asceding order.
- * @array: the array to be sorted.
- * @lo: the beginning of the array
- * @hi: the end of the array
- * @size: the size of the original array
- * Return: the index of the last swap
- */
-int partition_hoare(int *array, int lo, int hi, size_t size)
-{
-	int pivot = array[hi];
-	int temp;
-	int i = lo - 1;
-	int j = hi + 1;
-	
-	while (1)
-	{
-		do {
-			i++;
-		} while (array[i] < pivot);
-		do {
-			j--;
-		} while (array[j] > pivot);
-		if (i >= j)
-		{
-			return (j);
-		}
-		else
-		{		
-			temp = array[j];
-			array[j] = array[i];
-			array[i] = temp;
-			print_array(array, size);
-		}
-	}
+	quicksort(array, 0, size - 1, size);
 }
