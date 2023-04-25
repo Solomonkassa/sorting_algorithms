@@ -32,4 +32,7 @@ void hoare_sort(int *array, size_t size, int left, int right)
 	if (right - left > 1)
 	{
 		part = hoare_partition(array, size, left, right);
-
+		hoare_sort(array, size, left, part - 1);
+		hoare_sort(array, size, part, right);
+	}
+}
