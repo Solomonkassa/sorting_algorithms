@@ -15,3 +15,14 @@ void quick_sort_hoare(int *array, size_t size)
 
 	hoare_sort(array, size, 0, size - 1);
 }
+
+/**
+ * hoare_sort - Implement the quick sort algorithm
+ * @array: An array of integers to sort
+ * @size: The size of the array.
+ * @left: The starting index of the array partition
+ * @right: The ending index of the array partition
+ *
+ * Return: Nothing
+ */
+
