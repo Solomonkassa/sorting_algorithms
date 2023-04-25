@@ -17,10 +17,7 @@ void heap_sort(int *array, size_t size)
     
     for (i = size - 1; i >= 0; i--)
     {
-        tmp = array[0];
-        array[0] = array[i];
-        array[i] = tmp;
-        print_array(array, size);
+        swap(array, 0, i);
         heapify(array, i, 0);
     }
 }
@@ -30,7 +27,7 @@ void heap_sort(int *array, size_t size)
  * @array: list of integers
  * @size: size of array
  */
-void heapify(int *array, size_t size)
+void heapify(int *array, size_t size, int i)
 {
     int tmp, large = i;
     int l = 2 * i + 1;
@@ -48,10 +45,7 @@ void heapify(int *array, size_t size)
     
     if (large != i)
     {
-        tmp = array[i];
-        array[i] = array[large];
-        array[large] = tmp;
-        print_array(array, size);
+        swap(array, i, large);
         heapify(array, size, large);    
     }
 }
