@@ -34,24 +34,6 @@ void bitonic_compare(int up, int *array, size_t start, size_t end)
 }
 
 /**
- * bitonic_merge - merges bitonically
- * @up: true if UP sorting
- * @array: the array pointer
- * @start: the start index
- * @end: the stop index
- */
-void bitonic_merge(int up, int *array, size_t start, size_t end)
-{
-	size_t mid = (start + end) / 2;
-
-	if (end - start < 1)
-		return;
-	bitonic_compare(up, array, start, end);
-	bitonic_merge(up, array, start, mid);
-	bitonic_merge(up, array, mid + 1, end);
-}
-
-/**
  * _bitonic_sort - sorts bitonically by recursion
  * @up: true if UP sorting
  * @array: the array pointer
@@ -75,6 +57,25 @@ void _bitonic_sort(int up, int *array, size_t size, size_t start, size_t end)
 		up ? "UP" : "DOWN");
 	print_array(array + start, end - start + 1);
 }
+
+/**
+ * bitonic_merge - merges bitonically
+ * @up: true if UP sorting
+ * @array: the array pointer
+ * @start: the start index
+ * @end: the stop index
+ */
+void bitonic_merge(int up, int *array, size_t start, size_t end)
+{
+	size_t mid = (start + end) / 2;
+
+	if (end - start < 1)
+		return;
+	bitonic_compare(up, array, start, end);
+	bitonic_merge(up, array, start, mid);
+	bitonic_merge(up, array, mid + 1, end);
+}
+
 
 /**
  * bitonic_sort - sorts bitonically
