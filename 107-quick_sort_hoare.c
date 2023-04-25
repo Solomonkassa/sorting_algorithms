@@ -25,4 +25,11 @@ void quick_sort_hoare(int *array, size_t size)
  *
  * Return: Nothing
  */
+void hoare_sort(int *array, size_t size, int left, int right)
+{
+	int part;
+
+	if (right - left > 1)
+	{
+		part = hoare_partition(array, size, left, right);
 
