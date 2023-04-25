@@ -7,6 +7,11 @@
  *
  * Return: void
  */
+void bitonic_compare(int up, int *array, size_t start, size_t end);
+void _bitonic_sort(int up, int *array, size_t size, size_t start, size_t end);
+void bitonic_merge(int up, int *array, size_t start, size_t end);
+void bitonic_sort(int *array, size_t size);
+void swap(int *a, int *b);
 void swap(int *a, int *b)
 {
 	if (*a != *b)
