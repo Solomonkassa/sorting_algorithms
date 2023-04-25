@@ -36,3 +36,15 @@ void hoare_sort(int *array, size_t size, int left, int right)
 		hoare_sort(array, size, part, right);
 	}
 }
+
+/**
+ * hoare_partition - Order a subset of an array to the
+ * hoare partition scheme
+ * @array: The array of integers
+ * @size: The size of the array
+ * @left: The starting index of the subset to order
+ * @right: The ending index of the subset to order
+ *
+ * Return: The final partition index
+ */
+
