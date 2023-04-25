@@ -1,5 +1,10 @@
 #include "sort.h"
 
+void swap_ints(int *a, int *b);
+int hoare_partition(int *array, size_t size, int left, int right);
+void hoare_sort(int *array, size_t size, int left, int right);
+void quick_sort_hoare(int *array, size_t size);
+
 /**
  * quick_sort_hoare -  function that sorts an array of integers in
  * ascending order using the Quick sort algorithm
